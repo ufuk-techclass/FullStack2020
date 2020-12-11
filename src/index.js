@@ -1,10 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const Part = (props) => {
+  return (
+    <p>
+      {props.parts} {props.exercises}
+    </p>
+  )
+}
+
 const Header = (props) => {
   return (
     <div>
-      <p>Hello {props.mycourse}</p>
+      <h1>Hello {props.mycourse}</h1>
     </div>
   )
 }
@@ -12,16 +20,11 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <div>
-      <p>
-        {props.myparts[0]} {props.myparts[1]}
-      </p>
-      <p>
-        {props.myparts[2]} {props.myparts[3]}
-      </p>
-      <p>
-        {props.myparts[4]} {props.myparts[5]}
-      </p>
+      <Part parts={props.myparts[0]} exercises={props.myparts[1]} />
+      <Part parts={props.myparts[2]} exercises={props.myparts[3]} />
+      <Part parts={props.myparts[4]} exercises={props.myparts[5]} />
     </div>
+
   )
 }
 
