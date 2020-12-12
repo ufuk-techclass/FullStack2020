@@ -1,12 +1,10 @@
 import React from 'react'
 
-const Person = (props) => {
-
+const Person = ({ person }) => {
     return (
         <div>
-            {props.person.name} {props.person.number}
+            {person.name} {person.number}
         </div>
-
     )
 }
 
