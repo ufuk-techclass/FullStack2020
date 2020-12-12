@@ -28,9 +28,6 @@ const App = () => {
 
     useEffect(hook, [])
 
-
-
-
     const addNote = (event) => {
         event.preventDefault()
 
@@ -40,12 +37,31 @@ const App = () => {
 
         const result = persons.filter(p => p.name === newName)
 
+        //if input name matches with the list
         if (result.length !== 0) {
-            setNewName('')
-            setNewNumber('')
-            setMyFilter('')
-            alert(`${newName} is already added to phonebook`);
+            //update number, if confirmed
+            if (window.confirm(`${newName}  is already in the phonebook, replace the old number with a new one?`)) {
+                //update person object with the new number
+                const updatedPerson = { ...result[0], number: newNumber }
+
+                personService
+                    .update(result[0].id, updatedPerson)
+                    .then(() => {
+                        hook();
+                        setNewName('');
+                        setNewNumber('');
+                    })
+            }
+            //reset states, if unconfirmed
+            else {
+                setNewName('')
+                setNewNumber('')
+                setMyFilter('')
+            }
+
         }
+        //input name does not match with the list
+        //add new person to the list
         else {
             personService
                 .create(noteObject)
