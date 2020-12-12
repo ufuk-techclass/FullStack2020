@@ -11,6 +11,7 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('')
     const [myFilter, setMyFilter] = useState('')
     const [infoMessage, setInfoMessage] = useState(null)
+    const [infoSuccess, setInfoSuccess] = useState(true)
 
     //create Id (very low chance to assign same id to 2 different person)
     //Date.now() could be better
@@ -25,6 +26,9 @@ const App = () => {
             .getAll()
             .then(initialNotes => {
                 setPersons(initialNotes)
+            })
+            .catch(error => {
+                console.log("error: ", error)
             })
     }
 
@@ -52,10 +56,15 @@ const App = () => {
                         hook();
                         setNewName('');
                         setNewNumber('');
-                        setInfoMessage(`${updatedPerson.name}'s phone number is updated`)
+                        setInfoSuccess(true)
+                        setInfoMessage(`${updatedPerson.name}'s phone numeber is updated`)
                         setTimeout(() => {
                             setInfoMessage(null)
                         }, 2000);
+                    })
+                    .catch(error => {
+                        setInfoSuccess(false)
+                        console.log("error: ", error)
                     })
 
             }
@@ -73,18 +82,21 @@ const App = () => {
             personService
                 .create(noteObject)
                 .then(returnedPerson => {
-                    // setPersons(response)
                     setPersons(persons.concat(returnedPerson));
                     setNewName('')
                     setNewNumber('')
                     setMyFilter('')
+                    setInfoSuccess(true)
                     setInfoMessage(`${returnedPerson.name} is added`)
                     setTimeout(() => {
                         setInfoMessage(null)
                     }, 2000)
 
                 })
-
+                .catch(error => {
+                    setInfoSuccess(false)
+                    console.log("error: ", error)
+                })
 
         }
     }
@@ -110,17 +122,26 @@ const App = () => {
                 .deletePerson(selectedPerson.id)
                 .then(() => {
                     hook()
+                    setInfoSuccess(true)
                     setInfoMessage(`${selectedPerson.name} is successfully deleted `)
                     setTimeout(() => {
                         setInfoMessage(null)
                     }, 2000)
+                })
+                .catch(error => {
+                    setInfoSuccess(false)
+                    setInfoMessage(`${selectedPerson.name} has already been removed from server`)
+                    setTimeout(() => {
+                        setInfoMessage(null)
+                    }, 2000);
+                    console.log("error: ", error)
                 })
         }
     }
 
     return (
         <div>
-            <Notification message={infoMessage} />
+            <Notification message={infoMessage} infoSuccess={infoSuccess} />
             <h2>Phonebook</h2>
             <Filter handleSearch={handleSearch} />
             <h3>Add a new</h3>
