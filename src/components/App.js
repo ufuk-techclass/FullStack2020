@@ -13,14 +13,21 @@ const App = () => {
 
     const addNote = (event) => {
         event.preventDefault()
-        console.log('button clicked', event.target)
 
         const noteObject = {
             name: newName, id: randomId()
         }
 
-        setPersons(persons.concat(noteObject))
-        setNewName('')
+        const result = persons.filter(p => p.name === newName)
+
+        if (result.length !== 0) {
+            setNewName('')
+            alert(`${newName} is already added to phonebook`);
+        }
+        else {
+            setPersons(persons.concat(noteObject));
+            setNewName('')
+        }
     }
 
     const handleNoteChange = (event) => {
