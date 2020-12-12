@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import personService from '../services/persons'
 import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
-import axios from 'axios'
-import personService from '../services/persons'
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -75,6 +74,14 @@ const App = () => {
             : setMyFilter('')
     }
 
+    const handleDelete = (selectedPerson) => {
+        if (window.confirm(`Delete ${selectedPerson.name} `)) {
+            personService
+                .deletePerson(selectedPerson.id)
+                .then(() => hook())
+        }
+    }
+
     return (
         <div>
             <h2>Phonebook</h2>
@@ -82,7 +89,7 @@ const App = () => {
             <h3>Add a new</h3>
             <PersonForm addNote={addNote} newName={newName} handleNoteChange={handleNoteChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
             <h3>Numbers</h3>
-            <Persons myFilter={myFilter} persons={persons} />
+            <Persons myFilter={myFilter} persons={persons} handleDelete={handleDelete} />
         </div>
     )
 }
