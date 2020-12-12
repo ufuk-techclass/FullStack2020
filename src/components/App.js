@@ -20,6 +20,12 @@ const App = () => {
         setMyFilter(mySearch)
     }
 
+    const handleClick = (countryName) => {
+
+        const pickCountry = myFilter.filter(p => p.name.includes(countryName))
+        setMyFilter(pickCountry)
+    }
+
     return (
         <div>
             <div>
@@ -39,11 +45,11 @@ const App = () => {
                                 )
                             }
                         </ul>
-                        <div><img src={myFilter[0].flag} /></div>
+                        <div><img alt="" src={myFilter[0].flag} /></div>
                     </div>
                         : myFilter.length <= 10 ? <div> {
                             myFilter.map(e =>
-                                <div key={e.name} > {e.name} </div>
+                                <div key={e.name} > {e.name} <button onClick={() => handleClick(e.name)}> show</button></div>
                             )
                         }</div>
                             : <div>Too many matches, please specify another filter</div>
