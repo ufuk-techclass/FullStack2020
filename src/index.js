@@ -36,9 +36,18 @@ const Content = ({ mycourse: { parts } }) => {
 
 const Total = ({ mycourse: { parts } }) => {
   //props.mycourse.parts
+
+  /*
+  const total = parts.reduce((s, p) => {
+    console.log('what is happening', s, p)
+    return someMagicHere 
+  })
+  */
+
+  const total = parts.reduce((sum, part) => sum + part.exercises, 0)
   return (
     <div>
-      <p>Total of {parts[0].exercises + parts[1].exercises + parts[2].exercises + parts[3].exercises} exercises</p>
+      <p>Total of {total} exercises</p>
     </div>
   )
 }
