@@ -3,6 +3,7 @@ import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
 import axios from 'axios'
+import personService from '../services/persons'
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -10,22 +11,26 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('')
     const [myFilter, setMyFilter] = useState('')
 
+    //create Id (very low chance to assign same id to 2 different person)
+    //Date.now() could be better
+    let randomId = () => {
+        return Math.random();
+    };
+
+
     const hook = () => {
-        console.log('effect')
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                console.log('promise fulfilled')
-                setPersons(response.data)
+        console.log('get all persons')
+        personService
+            .getAll()
+            .then(initialNotes => {
+                setPersons(initialNotes)
             })
     }
 
     useEffect(hook, [])
 
-    //create Id
-    let randomId = () => {
-        return Math.random();
-    };
+
+
 
     const addNote = (event) => {
         event.preventDefault()
@@ -43,15 +48,14 @@ const App = () => {
             alert(`${newName} is already added to phonebook`);
         }
         else {
-            setPersons(persons.concat(noteObject));
-            setNewName('')
-            setNewNumber('')
-            setMyFilter('')
-
-            axios
-                .post('http://localhost:3001/persons', noteObject)
-                .then(response => {
-                    console.log("myresp: ", response)
+            personService
+                .create(noteObject)
+                .then(returnedPerson => {
+                    // setPersons(response)
+                    setPersons(persons.concat(returnedPerson));
+                    setNewName('')
+                    setNewNumber('')
+                    setMyFilter('')
                 })
         }
     }
