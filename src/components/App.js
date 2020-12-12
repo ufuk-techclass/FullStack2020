@@ -3,12 +3,14 @@ import personService from '../services/persons'
 import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
+import Notification from './Notification'
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [myFilter, setMyFilter] = useState('')
+    const [infoMessage, setInfoMessage] = useState(null)
 
     //create Id (very low chance to assign same id to 2 different person)
     //Date.now() could be better
@@ -50,7 +52,12 @@ const App = () => {
                         hook();
                         setNewName('');
                         setNewNumber('');
+                        setInfoMessage(`${updatedPerson.name}'s phone number is updated`)
+                        setTimeout(() => {
+                            setInfoMessage(null)
+                        }, 2000);
                     })
+
             }
             //reset states, if unconfirmed
             else {
@@ -71,7 +78,14 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                     setMyFilter('')
+                    setInfoMessage(`${returnedPerson.name} is added`)
+                    setTimeout(() => {
+                        setInfoMessage(null)
+                    }, 2000)
+
                 })
+
+
         }
     }
 
@@ -94,12 +108,19 @@ const App = () => {
         if (window.confirm(`Delete ${selectedPerson.name} `)) {
             personService
                 .deletePerson(selectedPerson.id)
-                .then(() => hook())
+                .then(() => {
+                    hook()
+                    setInfoMessage(`${selectedPerson.name} is successfully deleted `)
+                    setTimeout(() => {
+                        setInfoMessage(null)
+                    }, 2000)
+                })
         }
     }
 
     return (
         <div>
+            <Notification message={infoMessage} />
             <h2>Phonebook</h2>
             <Filter handleSearch={handleSearch} />
             <h3>Add a new</h3>
