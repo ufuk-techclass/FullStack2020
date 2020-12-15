@@ -1,5 +1,8 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
+
+app.use(morgan('tiny'))
 
 let persons = [
     { name: 'Arto Hellas', number: '040-1234567', id: 1 },
@@ -9,6 +12,12 @@ let persons = [
 ]
 
 app.use(express.json())
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+
+
 
 //create Id 
 let randomId = () => {
@@ -49,6 +58,14 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
+    /*  if (!body.name || !body.number || persons.filter(person => person.name === body.name).length !== 0) {
+  
+          return response.status(400).json({
+              error: 'content missing'
+          })
+      }
+      */
+
     if (body.name.length == 0 || body.number.length == 0) {
 
         return response.status(400).json({
@@ -71,6 +88,8 @@ app.post('/api/persons', (request, response) => {
     persons = persons.concat(person)
     response.json(person)
 })
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
