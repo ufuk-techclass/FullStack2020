@@ -10,7 +10,7 @@ let persons = [
 
 app.use(express.json())
 
-//create Id
+//create Id 
 let randomId = () => {
     return Date.now();
 };
@@ -48,6 +48,19 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
+
+    if (body.name.length == 0 || body.number.length == 0) {
+
+        return response.status(400).json({
+            error: 'name or number is missing'
+        })
+    }
+
+    if (persons.filter(person => person.name === body.name).length !== 0) {
+        return response.status(409).json({
+            error: `name must be unique. conflict: ${body.name}`
+        })
+    }
 
     const person = {
         name: body.name,
