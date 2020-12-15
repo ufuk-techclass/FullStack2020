@@ -10,7 +10,7 @@ let persons = [
 
 app.use(express.json())
 
-//create Id 
+//create Id
 let randomId = () => {
     return Date.now();
 };
@@ -44,6 +44,19 @@ app.delete('/api/persons/:id', (request, response) => {
     persons = persons.filter(person => person.id !== id)
 
     response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+
+    const person = {
+        name: body.name,
+        number: body.number,
+        id: randomId()
+    }
+
+    persons = persons.concat(person)
+    response.json(person)
 })
 
 const PORT = 3001
