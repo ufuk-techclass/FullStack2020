@@ -1,0 +1,1 @@
+DELETE https://ufuk-fs2020-part3-exc10.herokuapp.com/api/persons/2
