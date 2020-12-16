@@ -1,1 +1,1 @@
-GET https://ufuk-fs2020-part3-exc11.herokuapp.com/api/persons/5
+GET http://localhost:3001/info

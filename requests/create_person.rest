@@ -1,7 +1,7 @@
-POST https://ufuk-fs2020-part3-exc11.herokuapp.com/api/persons
+POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name": "Artdo Hellas",
-    "number": "1111111111"
+    "name": "QQQ",
+    "number": ""
 }

@@ -12,14 +12,6 @@ app.use(express.static('build'))
 morgan.token('json', (request, response) => JSON.stringify(request.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json'))
 
-/*
-let personsOld = [
-    { name: 'Arto Hellas', number: '040-1234567', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-]*/
-
 app.use(express.json())
 
 const unknownEndpoint = (request, response) => {
@@ -70,9 +62,12 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.get('/info', (request, response) => {
 
-    response.write(`<p>Phonebook has info for ${persons.length} people</p>`);
-    response.write(`<p> ${Date()} !</p>`);
-    response.end();
+    Person.countDocuments({})
+        .then(result => {
+            response.write(`<p>Phonebook has info for ${result} people</p>`);
+            response.write(`<p> ${Date()} !</p>`);
+            response.end();
+        })
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
@@ -111,6 +106,7 @@ app.post('/api/persons', (request, response) => {
     const body = request.body
 
     if (body.name.length == 0 || body.number.length == 0) {
+        console.log('name or number is missing')
 
         return response.status(400).json({
             error: 'name or number is missing'
