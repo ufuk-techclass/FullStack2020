@@ -12,13 +12,13 @@ app.use(express.static('build'))
 morgan.token('json', (request, response) => JSON.stringify(request.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json'))
 
-
-let persons = [
+/*
+let personsOld = [
     { name: 'Arto Hellas', number: '040-1234567', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
     { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-]
+]*/
 
 app.use(express.json())
 
@@ -84,33 +84,33 @@ app.post('/api/persons', (request, response) => {
             error: 'name or number is missing'
         })
     }
+    /*
+        if (persons.filter(person => person.name === body.name).length !== 0) {
+            return response.status(409).json({
+                error: `name must be unique. conflict: ${body.name}`
+            })
+        }
+        
+            const person = {
+                name: body.name,
+                number: body.number,
+                id: randomId()
+            }
+        
+            persons = persons.concat(person)
+            response.json(person)
+            */
 
-    if (persons.filter(person => person.name === body.name).length !== 0) {
-        return response.status(409).json({
-            error: `name must be unique. conflict: ${body.name}`
-        })
-    }
-
-    const person = {
+    const person = new Person({
         name: body.name,
         number: body.number,
         id: randomId()
-    }
+    })
 
-    persons = persons.concat(person)
-    response.json(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 
-    /*
-        const person = new Person({
-            name: body.name,
-            number: body.number,
-            id: randomId()
-        })
-    
-        person.save().then(savedPerson => {
-            response.json(savedPerson)
-        })
-    */
 })
 
 app.use(unknownEndpoint)
