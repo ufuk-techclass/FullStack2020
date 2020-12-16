@@ -42,15 +42,21 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    console.log("request.params.id: ", request.params)
 
+    Person.findById(request.params.id)
+        .then(person => {
+            if (person) {
+                response.json(person)
+            } else {
+                response.status(404).end()
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            response.status(400).send({ error: 'malformatted id' })
+        })
 
     /*
-        Person.findById(request.params.id).then(person => {
-            console.log("AAAAA: ", person)
-            response.json(person)
-        })*/
-
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
 
@@ -59,6 +65,7 @@ app.get('/api/persons/:id', (request, response) => {
     } else {
         response.status(404).end()
     }
+    */
 })
 
 app.get('/info', (request, response) => {
@@ -69,10 +76,21 @@ app.get('/info', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
 
-    response.status(204).end()
+    Person.findByIdAndRemove(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => {
+            console.log(error)
+            response.status(400).send({ error: 'no such id' })
+        })
+    /*
+        const id = Number(request.params.id)
+        persons = persons.filter(person => person.id !== id)
+    
+        response.status(204).end()
+    */
 })
 
 app.post('/api/persons', (request, response) => {
