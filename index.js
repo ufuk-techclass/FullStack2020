@@ -75,16 +75,13 @@ app.get('/info', (request, response) => {
     response.end();
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
 
     Person.findByIdAndRemove(request.params.id)
         .then(result => {
             response.status(204).end()
         })
-        .catch(error => {
-            console.log(error)
-            response.status(400).send({ error: 'no such id' })
-        })
+        .catch(error => next(error))
     /*
         const id = Number(request.params.id)
         persons = persons.filter(person => person.id !== id)
@@ -132,6 +129,19 @@ app.post('/api/persons', (request, response) => {
 })
 
 app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+
+    next(error)
+}
+
+app.use(errorHandler)
+
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
