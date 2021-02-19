@@ -54,6 +54,27 @@ test('4.9 verifies id', async () => {
   expect(response.body[0].id).toBeDefined()
 })
 
+test('4.10 verifies HTTP POST request ', async () => {
+  const newBlog = {
+    title: '4.10 POST',
+    author: 'Author 4.10',
+    url: 'WWW-4.10',
+    likes: 410,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  const contents = response.body.map(r => r.title)
+
+  expect(response.body).toHaveLength(initialBlogs.length + 1)
+  expect(contents).toContain('4.10 POST')
+})
+
 /*
 test('the first blog is about HTTP methods', async () => {
   const response = await api.get('/api/blogs')

@@ -28,7 +28,7 @@ blogsRouter.get('/:id', (request, response, next) => {
 })
 
 
-blogsRouter.post('/', (request, response, next) => {
+blogsRouter.post('/', async (request, response) => {
   const body = request.body
 
   const blog = new Blog({
@@ -39,11 +39,16 @@ blogsRouter.post('/', (request, response, next) => {
     id: randomId()
   })
 
+  const savedBlog = await blog.save()
+  response.json(savedBlog)
+
+  /*
   blog.save()
     .then(savedNote => {
       response.json(savedNote)
     })
     .catch(error => next(error))
+    */
 })
 
 blogsRouter.delete('/:id', (request, response, next) => {
