@@ -1,3 +1,5 @@
+const lodash = require('lodash')
+
 const dummy = (blogs) => {
   console.log('blogs: ', blogs)
   return 1
@@ -25,8 +27,25 @@ const favouriteBlog = (blogs) => {
   return { 'title': favBlog.title, 'author': favBlog.author, 'likes': favBlog.likes }
 }
 
+const mostBlogs = (blogs) => {
+
+  const groupedAuthors = lodash.groupBy(blogs.map(blog => blog.author))
+  const blogAmount = lodash.values(groupedAuthors)
+
+  const reducer = (maxLength, blog) => {
+    return maxLength.length > blog.length
+      ? maxLength
+      : blog
+  }
+  const largestAmount = blogAmount.reduce(reducer, blogAmount[0].length)
+
+  return { 'author': largestAmount[0], 'blogs': largestAmount.length }
+
+}
+
 module.exports = {
   dummy,
   totalLikes,
-  favouriteBlog
+  favouriteBlog,
+  mostBlogs
 }
