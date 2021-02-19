@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -12,7 +14,7 @@ const App = () => {
   //const [showAll, setShowAll] = useState(true)
   //const [errorMessage, setErrorMessage] = useState(null)
   const [loginVisible, setLoginVisible] = useState(false)
-  const [blogVisible, setBlogVisible] = useState(false)
+  //const [blogVisible, setBlogVisible] = useState(false)
   const [infoMessage, setInfoMessage] = useState(null)
   const [infoSuccess, setInfoSuccess] = useState(true)
   const [username, setUsername] = useState('')
@@ -23,6 +25,8 @@ const App = () => {
     author: '',
     url: ''
   })
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
 
@@ -45,6 +49,7 @@ const App = () => {
 
   const addBlog = async (event) => {
     event.preventDefault()
+    blogFormRef.current.toggleVisibility()
 
     const blogObject = {
       ...newBlog, id: Date.now()
@@ -205,11 +210,11 @@ const App = () => {
 
 
   //const addBlog = () => console.log("A")
-  const handleBlogChange = () => {
+  /*/const handleBlogChange = () => {
     blogs.map(blog =>
       <Blog key={blog.id} blog={blog} />
     )
-  }
+  }*/
 
   const logoutUser = () => {
     window.localStorage.clear()
@@ -224,32 +229,29 @@ const App = () => {
 
 
   const blogForm = (user) => {
-    const hideWhenVisible = { display: blogVisible ? 'none' : '' }
-    const showWhenVisible = { display: blogVisible ? '' : 'none' }
 
     return (
       <div>
         <div>{user.username} logged in <button onClick={logoutUser}>logout</button></div>
         <br />
-        <div style={hideWhenVisible}>
-          <button onClick={() => setBlogVisible(true)}>new  blog</button>
-        </div>
 
-        <div style={showWhenVisible}>
+
+        <Togglable buttonLabel="create new blog" ref={blogFormRef}>
           <BlogForm
             addBlog={addBlog}
             newBlog={newBlog}
             handleTitleChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}
             handleAuthorChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}
             handleUrlChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}
-            handleVisibility={() => setBlogVisible(false)}
+
           />
-          <button onClick={() => setBlogVisible(false)}>cancel</button>
-        </div>
+        </Togglable>
         {
           blogs.map(blog => {
             if (user.username === blog.user.username) {
-              return <Blog key={blog.id} blog={blog} username={user.username} />
+              return (
+                <Blog key={blog.id} blog={blog} username={user.username} />
+              )
             }
           })
         }

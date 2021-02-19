@@ -1,7 +1,7 @@
 import React from 'react'
 
 const BlogForm = ({ newBlog, addBlog, handleTitleChange,
-  handleAuthorChange, handleUrlChange, handleVisibility }) => {
+  handleAuthorChange, handleUrlChange }) => {
 
 
   return (
@@ -20,7 +20,7 @@ const BlogForm = ({ newBlog, addBlog, handleTitleChange,
           value={newBlog.url}
           onChange={handleUrlChange}
         /></div>
-        <button type="submit" onClick={handleVisibility}>Add blog</button>
+        <button type="submit">Add blog</button>
       </form>
     </div>
 
