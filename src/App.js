@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   //const [newBlog, setNewBlog] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [infoMessage, setInfoMessage] = useState(null)
+  const [infoSuccess, setInfoSuccess] = useState(true)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -95,6 +98,11 @@ const App = () => {
         author: '',
         url: ''
       })
+      setInfoSuccess(true)
+      setInfoMessage(`A new blog "${newBlog.title}" by "${newBlog.author}" is added`)
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 3000);
       //setPersons(persons.concat(returnedBlogs));
       //setNewName('')
       //setNewNumber('')
@@ -106,6 +114,11 @@ const App = () => {
       //}, 2000)
 
     } catch (error) {
+      setInfoSuccess(false)
+      setInfoMessage(`Validation error: ${error.response.data.error}`)
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 3000);
       console.log("error-add: ", error.response.data)
     }
     //catch(error => {
@@ -136,12 +149,26 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
-      setErrorMessage('Wrong credentials')
-      console.log("DFEFWEFWEFWF: ", exception.response.data)
+      setInfoSuccess(true)
+      setInfoMessage(`User "${user.name}" logged in`)
       setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+        setInfoMessage(null)
+      }, 3000);
+    } catch (exception) {
+
+      setUsername('')
+      setPassword('')
+      setInfoSuccess(false)
+      setInfoMessage(`Validation error: ${exception.response.data.error}`)
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 3000);
+
+      /* setErrorMessage('Wrong credentials')
+       console.log("DFEFWEFWEFWF: ", exception.response.data)
+       setTimeout(() => {
+         setErrorMessage(null)
+       }, 5000)*/
     }
 
     console.log('logging in with', username, password)
@@ -183,6 +210,12 @@ const App = () => {
 
   const logoutUser = () => {
     window.localStorage.clear()
+
+    setInfoSuccess(true)
+    setInfoMessage(`A new blog "${user.name}" logged out`)
+    setTimeout(() => {
+      setInfoMessage(null)
+    }, 3000);
     setUser(null)
   }
 
@@ -220,6 +253,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={infoMessage} infoSuccess={infoSuccess} />
       {user === null && loginForm()}
       {user !== null && blogForm(user)}
 
