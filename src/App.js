@@ -47,6 +47,35 @@ const App = () => {
     }
   }, [])
 
+  const addLike = async (blog) => {
+
+    const result = await blogs.filter(p => p.id === blog.id)
+    const newLikes = result[0].likes + 1
+    const updatedBlog = { ...result[0], likes: newLikes }
+    try {
+      await blogService.update(blog.id, updatedBlog)
+      const updatedBlogs = await blogService.getAll()
+      setBlogs(updatedBlogs)
+
+
+      setInfoSuccess(true)
+      setInfoMessage(`The blog: "${result[0].title}" got +1 like`)
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 3000);
+
+
+    } catch (error) {
+      setInfoSuccess(false)
+      setInfoMessage(`Some error: ${error.response.data.error}`)
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 3000);
+      console.log("error-add: ", error.response.data)
+    }
+
+  }
+
   const addBlog = async (event) => {
     event.preventDefault()
     blogFormRef.current.toggleVisibility()
@@ -250,7 +279,7 @@ const App = () => {
           blogs.map(blog => {
             if (user.username === blog.user.username) {
               return (
-                <Blog key={blog.id} blog={blog} username={user.username} />
+                <Blog key={blog.id} blog={blog} username={user.username} addLike={addLike} />
               )
             }
           })
