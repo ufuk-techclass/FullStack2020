@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+    "title": "new title",
+    "author": "new auth",
+    "url": "new url",
+    "likes": "1"
+    
+}
