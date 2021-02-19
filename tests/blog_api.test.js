@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const helper = require('./test_helper')
 const app = require('../app')
 
 const api = supertest(app)
@@ -7,39 +8,41 @@ const api = supertest(app)
 // Initializing the database before tests
 
 const Blog = require('../models/blog')
-const initialBlogs = [
-  {
-    title: 'test-title-1',
-    author: 'test-author-1',
-    url: 'test-url-1',
-    likes: 1,
-
-  },
-  {
-    title: 'test-title-2',
-    author: 'test-author-2',
-    url: 'test-url-2',
-    likes: 2,
-
-  },
-]
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(initialBlogs[0])
+
+  for (let blog of helper.initialBlogs) {
+    let blogObject = new Blog(blog)
+    await blogObject.save()
+  }
+
+  /*
+  let blogObject = new Blog(helper.initialBlogs[0])
   await blogObject.save()
-  blogObject = new Blog(initialBlogs[1])
+  blogObject = new Blog(helper.initialBlogs[1])
   await blogObject.save()
+  */
 })
 
-
-
-test('notes are returned as json', async () => {
+test('blogs are returned as json', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
+
+test('all blogs are returned', async () => {
+  const response = await api.get('/api/blogs')
+
+  expect(response.body).toHaveLength(helper.initialBlogs.length)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+
+})
+
 /*
 test('4.8 amount of blog posts', async () => {
   const response = await api.get('/api/blogs')
