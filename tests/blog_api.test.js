@@ -13,14 +13,14 @@ const initialBlogs = [
     author: 'test-author-1',
     url: 'test-url-1',
     likes: 1,
-    id: 13,
+
   },
   {
     title: 'test-title-2',
     author: 'test-author-2',
     url: 'test-url-2',
     likes: 2,
-    id: 14
+
   },
 ]
 
@@ -47,13 +47,13 @@ test('4.8 amount of blog posts', async () => {
   expect(response.body).toHaveLength(2)
 })
 
-/*
+
 test('4.9 verifies id', async () => {
   const response = await api.get('/api/blogs')
 
-  expect(response.body[0]._id).toBeDefined()
+  expect(response.body[0].id).toBeDefined()
 })
-*/
+
 /*
 test('the first blog is about HTTP methods', async () => {
   const response = await api.get('/api/blogs')
