@@ -75,6 +75,21 @@ test('4.10-11 verifies HTTP POST request ', async () => {
   expect(contents).toContain('4.10 POST')
 })
 
+test('4.12 verifies missing title and url ', async () => {
+  const newBlog = {
+    //  title: '4.10 POST',
+    author: 'Author 4.10'//,
+    // url: 'WWW-4.10'//,
+    //likes: 410,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+})
+
 /*
 test('the first blog is about HTTP methods', async () => {
   const response = await api.get('/api/blogs')
