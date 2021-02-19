@@ -32,6 +32,10 @@ const App = () => {
 
     const fetchData = async () => {
       const blogs = await blogService.getAll()
+      //sorting blog posts by the number of likes
+      blogs.sort((a, b) => {
+        return a.likes - b.likes
+      }).reverse()
       setBlogs(blogs)
     }
     fetchData()
@@ -55,6 +59,12 @@ const App = () => {
     try {
       await blogService.update(blog.id, updatedBlog)
       const updatedBlogs = await blogService.getAll()
+
+      //sorting blog posts by the number of likes
+      updatedBlogs.sort((a, b) => {
+        return a.likes - b.likes
+      }).reverse()
+
       setBlogs(updatedBlogs)
 
 
@@ -130,6 +140,10 @@ const App = () => {
     try {
       await blogService.create(blogObject)
       const blogs = await blogService.getAll()
+      //sorting blog posts by the number of likes
+      blogs.sort((a, b) => {
+        return a.likes - b.likes
+      }).reverse()
       setBlogs(blogs)
       setNewBlog({
         title: '',
