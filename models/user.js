@@ -4,6 +4,8 @@ const uniqueValidator = require('mongoose-unique-validator')
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
+    minlength: 3, //password restriction is defined at controller/users.js
+    //because the password received by the backend and the password hash saved to the database are not the same thing.
     unique: true
   },
   name: String,
