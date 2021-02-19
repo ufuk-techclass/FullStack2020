@@ -1,12 +1,12 @@
 POST http://localhost:3003/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVTRVIgMSIsImlkIjoiNjAwZWRmNzFiMzFhMWExODY4ZDQ2MmUxIiwiaWF0IjoxNjExNjAxMTY3fQ.ywueHedHD8uZNBbfNVsttfAXyuUdHJuxMlrGFLromAM
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RpbmdfdXNlcm5hbWUiLCJpZCI6IjYwMTJmZDdlZTNlODc5MjA0OGUyMDQwMCIsImlhdCI6MTYxMTg1NzQxNX0.V_UIsvVhDMfdX_YKt2Df75-oShaqSwgiICXBcJqqRw0
 
 {
-    "title": "tokenblog2",
-    "author": "tokenblog2",
-    "url": "tokenblog2",
+    "title": "vvvvvvvvvvvvvv",
+    "author": "vvvvvvvvvvv",
+    "url": "vvvvvv",
     "likes": "1332",
-    "userId": "600edf71b31a1a1868d462e1"
+    "userId": "6012fd7ee3e8792048e20400"
     
 }
