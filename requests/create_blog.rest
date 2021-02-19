@@ -3,10 +3,10 @@ content-type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVTRVIgMSIsImlkIjoiNjAwZWRmNzFiMzFhMWExODY4ZDQ2MmUxIiwiaWF0IjoxNjExNjAxMTY3fQ.ywueHedHD8uZNBbfNVsttfAXyuUdHJuxMlrGFLromAM
 
 {
-    "title": "tokenblog",
-    "author": "tokenblog",
-    "url": "tokenblog",
-    "likes": "133",
+    "title": "tokenblog2",
+    "author": "tokenblog2",
+    "url": "tokenblog2",
+    "likes": "1332",
     "userId": "600edf71b31a1a1868d462e1"
     
 }
