@@ -3,7 +3,7 @@ import Togglable from './Togglable'
 
 const Blog = ({ blog, username, addLike, handleDelete }) => (
 
-  <div className={"blogStyle"}>
+  <div className={'blogStyle'}>
     Title: {blog.title}
     <Togglable buttonLabel="view">
       <div>Author: {blog.author}</div>

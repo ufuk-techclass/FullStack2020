@@ -10,11 +10,7 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  //const [newBlog, setNewBlog] = useState('')
-  //const [showAll, setShowAll] = useState(true)
-  //const [errorMessage, setErrorMessage] = useState(null)
   const [loginVisible, setLoginVisible] = useState(false)
-  //const [blogVisible, setBlogVisible] = useState(false)
   const [infoMessage, setInfoMessage] = useState(null)
   const [infoSuccess, setInfoSuccess] = useState(true)
   const [username, setUsername] = useState('')
@@ -72,7 +68,7 @@ const App = () => {
       setInfoMessage(`The blog: "${result[0].title}" got +1 like`)
       setTimeout(() => {
         setInfoMessage(null)
-      }, 3000);
+      }, 3000)
 
 
     } catch (error) {
@@ -80,8 +76,8 @@ const App = () => {
       setInfoMessage(`Some error: ${error.response.data.error}`)
       setTimeout(() => {
         setInfoMessage(null)
-      }, 3000);
-      console.log("error-add: ", error.response.data)
+      }, 3000)
+      console.log('error-add: ', error.response.data)
     }
 
   }
@@ -106,8 +102,8 @@ const App = () => {
         setInfoMessage(`Validation error: ${error.response.data.error}`)
         setTimeout(() => {
           setInfoMessage(null)
-        }, 3000);
-        console.log("error-add: ", error.response.data)
+        }, 3000)
+        console.log('error-add: ', error.response.data)
       }
     }
   }
@@ -119,49 +115,6 @@ const App = () => {
     const blogObject = {
       ...newBlog, id: Date.now()
     }
-    /*
-        const result = persons.filter(p => p.name === newName)
-    
-        //if input name matches with the list
-        if (result.length !== 0) {
-          //update number, if confirmed
-          if (window.confirm(`${newName}  is already in the phonebook, replace the old number with a new one?`)) {
-            //update person object with the new number
-            const updatedPerson = { ...result[0], number: newNumber }
-    
-            personService
-              .update(result[0].id, updatedPerson)
-              .then(() => {
-                hook();
-                setNewName('');
-                setNewNumber('');
-                setInfoSuccess(true)
-                setInfoMessage(`${updatedPerson.name}'s phone numeber is updated`)
-                setTimeout(() => {
-                  setInfoMessage(null)
-                }, 2000);
-              })
-              .catch(error => {
-                setInfoSuccess(false)
-                setInfoMessage(`Validation error: ${error.response.data.error}`)
-                setTimeout(() => {
-                  setInfoMessage(null)
-                }, 2000);
-                console.log("error: ", error.response.data)
-              })
-    
-          }
-          //reset states, if unconfirmed
-          else {
-            setNewName('')
-            setNewNumber('')
-            setMyFilter('')
-          }
-    
-        }
-        //input name does not match with the list
-        //add new person to the list
-        else {*/
 
     try {
       await blogService.create(blogObject)
@@ -180,35 +133,16 @@ const App = () => {
       setInfoMessage(`A new blog "${newBlog.title}" by "${newBlog.author}" is added`)
       setTimeout(() => {
         setInfoMessage(null)
-      }, 3000);
-      //setPersons(persons.concat(returnedBlogs));
-      //setNewName('')
-      //setNewNumber('')
-      //setMyFilter('')
-      //setInfoSuccess(true)
-      //setInfoMessage(`${returnedPerson.name} is added`)
-      //setTimeout(() => {
-      // setInfoMessage(null)
-      //}, 2000)
+      }, 3000)
 
     } catch (error) {
       setInfoSuccess(false)
       setInfoMessage(`Validation error: ${error.response.data.error}`)
       setTimeout(() => {
         setInfoMessage(null)
-      }, 3000);
-      console.log("error-add: ", error.response.data)
+      }, 3000)
+      console.log('error-add: ', error.response.data)
     }
-    //catch(error => {
-    // setInfoSuccess(false)
-    // setInfoMessage(`Validation error: ${error.response.data.error} `)
-    // setTimeout(() => {
-    //   setInfoMessage(null)
-    // }, 2000)
-    //   console.log("error-add: ", error.response.data)
-    // })
-
-    //}
   }
 
   const handleLogin = async (event) => {
@@ -231,7 +165,7 @@ const App = () => {
       setInfoMessage(`User "${user.name}" logged in`)
       setTimeout(() => {
         setInfoMessage(null)
-      }, 3000);
+      }, 3000)
     } catch (exception) {
 
       setUsername('')
@@ -240,13 +174,7 @@ const App = () => {
       setInfoMessage(`Validation error: ${exception.response.data.error}`)
       setTimeout(() => {
         setInfoMessage(null)
-      }, 3000);
-
-      /* setErrorMessage('Wrong credentials')
-       console.log("DFEFWEFWEFWF: ", exception.response.data)
-       setTimeout(() => {
-         setErrorMessage(null)
-       }, 5000)*/
+      }, 3000)
     }
 
     console.log('logging in with', username, password)
@@ -277,14 +205,6 @@ const App = () => {
 
   }
 
-
-  //const addBlog = () => console.log("A")
-  /*/const handleBlogChange = () => {
-    blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
-    )
-  }*/
-
   const logoutUser = () => {
     window.localStorage.clear()
 
@@ -292,7 +212,7 @@ const App = () => {
     setInfoMessage(`A new blog "${user.name}" logged out`)
     setTimeout(() => {
       setInfoMessage(null)
-    }, 3000);
+    }, 3000)
     setUser(null)
   }
 
