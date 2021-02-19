@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
@@ -228,7 +229,6 @@ const App = () => {
 
     return (
       <div>
-
         <div>{user.username} logged in <button onClick={logoutUser}>logout</button></div>
         <br />
         <div style={hideWhenVisible}>
@@ -236,22 +236,14 @@ const App = () => {
         </div>
 
         <div style={showWhenVisible}>
-          <h2>Create new blog</h2>
-          <form onSubmit={addBlog}>
-            <div>Title: <input
-              value={newBlog.title}
-              onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}
-            /></div>
-            <div>Author: <input
-              value={newBlog.author}
-              onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}
-            /></div>
-            <div>URL: <input
-              value={newBlog.url}
-              onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}
-            /></div>
-            <button type="submit" onClick={() => setBlogVisible(false)}>Add blog</button>
-          </form>
+          <BlogForm
+            addBlog={addBlog}
+            newBlog={newBlog}
+            handleTitleChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}
+            handleAuthorChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}
+            handleUrlChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}
+            handleVisibility={() => setBlogVisible(false)}
+          />
           <button onClick={() => setBlogVisible(false)}>cancel</button>
         </div>
         {
