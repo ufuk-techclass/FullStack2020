@@ -54,12 +54,12 @@ test('4.9 verifies id', async () => {
   expect(response.body[0].id).toBeDefined()
 })
 
-test('4.10 verifies HTTP POST request ', async () => {
+test('4.10-11 verifies HTTP POST request ', async () => {
   const newBlog = {
     title: '4.10 POST',
     author: 'Author 4.10',
-    url: 'WWW-4.10',
-    likes: 410,
+    url: 'WWW-4.10'//,
+    //likes: 410,
   }
 
   await api
