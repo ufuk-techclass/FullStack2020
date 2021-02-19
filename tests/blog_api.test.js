@@ -40,7 +40,7 @@ test('notes are returned as json', async () => {
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
-
+/*
 test('4.8 amount of blog posts', async () => {
   const response = await api.get('/api/blogs')
 
@@ -102,6 +102,23 @@ test('4.13 delete a single blogpost resource', async () => {
 
   const response2 = await api.get('/api/blogs')
   expect(response2.body).toHaveLength(1)
+})
+*/
+test('4.14 update the amount of likes for a blog post', async () => {
+  const newBlog = {
+    title: 'test-title-1',
+    author: 'test-author-1',
+    url: 'test-url-1',
+    likes: 10
+  }
+
+  const response = await api.get('/api/blogs')
+
+  await api
+    .put(`/api/blogs/${response.body[0].id}`)
+    .send(newBlog)
+
+    .expect('Content-Type', /application\/json/)
 })
 
 /*
