@@ -16,6 +16,7 @@ const totalLikes = (blogs) => {
 
 }
 
+
 const favouriteBlog = (blogs) => {
 
   const reducer = (maxLike, blog) => {
@@ -25,6 +26,7 @@ const favouriteBlog = (blogs) => {
   }
   const favBlog = blogs.reduce(reducer, blogs[0])
   return { 'title': favBlog.title, 'author': favBlog.author, 'likes': favBlog.likes }
+
 }
 
 const mostBlogs = (blogs) => {
@@ -43,9 +45,23 @@ const mostBlogs = (blogs) => {
 
 }
 
+const mostLikes = (blogs) => {
+  let groupedAuthors = lodash(blogs)
+    .groupBy('author')
+    .map((objs, key) => {
+      return {
+        'author': key,
+        'likes': lodash.sumBy(objs, 'likes')
+      }
+    })
+    .value()
+  return lodash.maxBy(groupedAuthors, (o) => o.likes)
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
