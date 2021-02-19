@@ -86,6 +86,32 @@ const App = () => {
 
   }
 
+  const handleDelete = async (blog) => {
+    if (window.confirm(`Delete ${blog.title} `)) {
+      try {
+        await blogService.deleteBlog(blog.id)
+        const blogs = await blogService.getAll()
+        blogs.sort((a, b) => {
+          return a.likes - b.likes
+        }).reverse()
+        setBlogs(blogs)
+        setInfoSuccess(true)
+        setInfoMessage(`The blog: "${blog.title}" is successfully deleted `)
+        setTimeout(() => {
+          setInfoMessage(null)
+        }, 2000)
+
+      } catch (error) {
+        setInfoSuccess(false)
+        setInfoMessage(`Validation error: ${error.response.data.error}`)
+        setTimeout(() => {
+          setInfoMessage(null)
+        }, 3000);
+        console.log("error-add: ", error.response.data)
+      }
+    }
+  }
+
   const addBlog = async (event) => {
     event.preventDefault()
     blogFormRef.current.toggleVisibility()
@@ -275,7 +301,7 @@ const App = () => {
 
     return (
       <div>
-        <div>{user.username} logged in <button onClick={logoutUser}>logout</button></div>
+        <div>{user.name} logged in <button onClick={logoutUser}>logout</button></div>
         <br />
 
 
@@ -291,11 +317,11 @@ const App = () => {
         </Togglable>
         {
           blogs.map(blog => {
-            if (user.username === blog.user.username) {
-              return (
-                <Blog key={blog.id} blog={blog} username={user.username} addLike={addLike} />
-              )
-            }
+
+            return (
+              <Blog key={blog.id} blog={blog} username={user.username} addLike={addLike} handleDelete={handleDelete} />
+            )
+
           })
         }
       </div>
