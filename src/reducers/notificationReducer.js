@@ -1,22 +1,24 @@
-const initialState = 'This message is an initialState in notificationReducer (Messages for Voting and Adding are cleared after 5 seconds)'
+const initialState = 'This message is an initialState in notificationReducer (Messages for Voting and Adding are cleared after 3 seconds)'
 
-export const createMessage = (message) => {
-  return {
-    type: "CREATE",
-    message: message
+export const createMessage = (message, time) => {
+  return async dispatch => {
+    dispatch({
+      type: "CREATE",
+      message: message
+    })
+    setTimeout(
+      () => dispatch({ type: 'CLEAR' }), time * 1000)
   }
 }
 
-export const voteMessage = (message) => {
-  return {
-    type: "VOTED",
-    message: message
-  }
-}
-
-export const clearMessage = () => {
-  return {
-    type: "CLEAR"
+export const voteMessage = (message, time) => {
+  return async dispatch => {
+    dispatch({
+      type: "VOTED",
+      message: message
+    })
+    setTimeout(
+      () => dispatch({ type: 'CLEAR' }), time * 1000)
   }
 }
 

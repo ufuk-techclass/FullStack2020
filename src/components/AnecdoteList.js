@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { voteAnectode } from '../reducers/anecdoteReducer'
-import { voteMessage, clearMessage } from '../reducers/notificationReducer'
+import { voteMessage } from '../reducers/notificationReducer'
 
 const AnectodeList = () => {
   const dispatch = useDispatch()
@@ -9,10 +9,7 @@ const AnectodeList = () => {
 
   const vote = async (anecdote) => {
     dispatch(voteAnectode(anecdote))
-    dispatch(voteMessage(anecdote.content))
-    setTimeout(() => {
-      dispatch(clearMessage())
-    }, 5000);
+    dispatch(voteMessage(anecdote.content, 3))
   }
 
   return (
