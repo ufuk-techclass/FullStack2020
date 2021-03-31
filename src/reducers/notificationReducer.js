@@ -1,12 +1,15 @@
 const initialState = 'This message is an initialState in notificationReducer (Messages for Voting and Adding are cleared after 3 seconds)'
 
+let to = undefined
 export const createMessage = (message, time) => {
   return async dispatch => {
     dispatch({
       type: "CREATE",
       message: message
     })
-    setTimeout(
+
+    clearTimeout(to)
+    to = setTimeout(
       () => dispatch({ type: 'CLEAR' }), time * 1000)
   }
 }
@@ -17,7 +20,10 @@ export const voteMessage = (message, time) => {
       type: "VOTED",
       message: message
     })
-    setTimeout(
+
+    clearTimeout(to)
+
+    to = setTimeout(
       () => dispatch({ type: 'CLEAR' }), time * 1000)
   }
 }
