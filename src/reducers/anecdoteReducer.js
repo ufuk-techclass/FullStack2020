@@ -1,4 +1,4 @@
-const getId = () => (100000 * Math.random()).toFixed(0)
+//const getId = () => (100000 * Math.random()).toFixed(0)
 
 /*
 const asObject = (anecdote) => {
@@ -17,14 +17,10 @@ export const initializeAnecdotes = (anecdotes) => {
 }
 
 export const newAnectode = (anecdote) => {
+  console.log("AAAAA: ", anecdote)
   return {
     type: "NEW",
-    data: {
-      content: anecdote,
-      id: getId(),
-      votes: 0
-    }
-
+    data: anecdote
   }
 }
 
