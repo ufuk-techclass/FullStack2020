@@ -17,6 +17,18 @@ const asObject = (anecdote) => {
   }
 }
 
+export const newAnectode = (anecdote) => {
+  return {
+    type: "NEW",
+    data: {
+      content: anecdote,
+      id: getId(),
+      votes: 0
+    }
+
+  }
+}
+
 export const voteAnectode = (id) => {
   return {
     type: "VOTE",
@@ -36,6 +48,10 @@ const reducer = (state = initialState, action) => {
 
     return state.map(anectode =>
       anectode.id !== action.id ? anectode : changedState)
+  }
+
+  if (action.type === "NEW") {
+    return state.concat(action.data)
   }
 
   return state
