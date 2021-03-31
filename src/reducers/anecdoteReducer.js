@@ -9,15 +9,21 @@ const asObject = (anecdote) => {
   }
 }
 */
-export const initializeAnecdotes = (anecdotes) => {
-  return {
-    type: 'INIT',
-    data: anecdotes,
+
+import anecdoteService from '../services/anecdotes'
+
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT',
+      data: anecdotes,
+
+    })
   }
 }
 
 export const newAnectode = (anecdote) => {
-  console.log("AAAAA: ", anecdote)
   return {
     type: "NEW",
     data: anecdote
