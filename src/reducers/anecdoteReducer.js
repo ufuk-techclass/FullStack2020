@@ -24,9 +24,12 @@ export const initializeAnecdotes = () => {
 }
 
 export const newAnectode = (anecdote) => {
-  return {
-    type: "NEW",
-    data: anecdote
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew(anecdote)
+    dispatch({
+      type: "NEW",
+      data: newAnecdote
+    })
   }
 }
 
