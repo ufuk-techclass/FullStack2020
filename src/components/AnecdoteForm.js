@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { newAnectode } from '../reducers/anecdoteReducer'
 import { createMessage, clearMessage } from '../reducers/notificationReducer'
-//import anecdoteService from '../services/anecdotes'
 
 const AnectodeForm = () => {
   const dispatch = useDispatch()
@@ -12,7 +11,6 @@ const AnectodeForm = () => {
     const content = event.target.anectode.value
     event.target.anectode.value = ''
 
-    //const newAnecdote = await anecdoteService.createNew(content)
     dispatch(newAnectode(content))
     dispatch(createMessage(content))
     setTimeout(() => {

@@ -7,7 +7,6 @@ const Filter = () => {
 
   const dispatch = useDispatch()
 
-
   const handleChange = (event) => {
 
     dispatch(filterSearch(event.target.value))

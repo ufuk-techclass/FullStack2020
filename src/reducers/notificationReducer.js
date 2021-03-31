@@ -20,10 +20,7 @@ export const clearMessage = () => {
   }
 }
 
-
 const notificationReducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
 
   if (action.type === "CREATE") {
     console.log("message: ", state)

@@ -7,8 +7,8 @@ const AnectodeList = () => {
   const dispatch = useDispatch()
   const anecdotes = useSelector(state => state)
 
-  const vote = (anecdote) => {
-    dispatch(voteAnectode(anecdote.id))
+  const vote = async (anecdote) => {
+    dispatch(voteAnectode(anecdote))
     dispatch(voteMessage(anecdote.content))
     setTimeout(() => {
       dispatch(clearMessage())
@@ -17,7 +17,6 @@ const AnectodeList = () => {
 
   return (
     <div>
-
       {anecdotes.anecdote.map(anecdote => anecdote.content.toLowerCase().includes(anecdotes.filter.toLowerCase())
         ?
         <div key={anecdote.id}>
