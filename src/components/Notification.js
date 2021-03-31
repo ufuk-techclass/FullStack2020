@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux'
 const Notification = () => {
   const notification = useSelector(state => state)
 
-  /*
-  if (notification.message === 'initial message') {
-    return notification.message
+
+  if (notification.message === null) {
+    return null
   }
-*/
+
 
   const style = {
     border: 'solid',
