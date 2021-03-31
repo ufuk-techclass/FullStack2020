@@ -53,12 +53,6 @@ const anecdoteReducer = (state = initialState, action) => {
     })
 
     return orderedState
-
-
-    /*
-        return state.map(anectode =>
-          anectode.id !== action.id ? anectode : changedState)
-      */
   }
 
   if (action.type === "NEW") {

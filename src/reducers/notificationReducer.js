@@ -1,4 +1,4 @@
-const initialState = 'This message is an initialState in notificationReducer'
+const initialState = 'This message is an initialState in notificationReducer (Messages for Voting and Adding are cleared after 5 seconds)'
 
 export const createMessage = (message) => {
   return {
@@ -21,7 +21,7 @@ export const clearMessage = () => {
 }
 
 
-const reducerNotify = (state = initialState, action) => {
+const notificationReducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
@@ -43,4 +43,4 @@ const reducerNotify = (state = initialState, action) => {
   return state
 }
 
-export default reducerNotify
+export default notificationReducer

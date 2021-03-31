@@ -17,7 +17,9 @@ const AnectodeList = () => {
 
   return (
     <div>
-      {anecdotes.anecdote.map(anecdote =>
+
+      {anecdotes.anecdote.map(anecdote => anecdote.content.toLowerCase().includes(anecdotes.filter.toLowerCase())
+        ?
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
@@ -27,7 +29,10 @@ const AnectodeList = () => {
             <button onClick={() => vote(anecdote)}>vote</button>
           </div>
         </div>
-      )}
+        :
+        <div key={anecdote.id}></div>
+      )
+      }
     </div>
   )
 }
