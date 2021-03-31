@@ -45,12 +45,26 @@ const reducer = (state = initialState, action) => {
   if (action.type === "VOTE") {
     const anectode = state.find(anectode => anectode.id === action.id)
     const changedState = { ...anectode, votes: anectode.votes + 1 }
-
-    return state.map(anectode =>
+    const changedAnectode = state.map(anectode =>
       anectode.id !== action.id ? anectode : changedState)
+
+    const orderedState = changedAnectode.sort((a, b) => {
+      return b.votes - a.votes
+    })
+
+    return orderedState
+
+
+    /*
+        return state.map(anectode =>
+          anectode.id !== action.id ? anectode : changedState)
+      */
   }
 
   if (action.type === "NEW") {
+    state.sort((a, b) => {
+      return b.votes - a.votes
+    })
     return state.concat(action.data)
   }
 
