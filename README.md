@@ -11,5 +11,5 @@ https://fullstackopen.com/en/
 
 - The course covers testing, configuration and environment management, and the use of MongoDB for storing the application’s data.
 
-## Description of the exercises 6.1-6.2
+## Description of the exercises 6.9-6.12
 ![](https://github.com/ufuk-techclass/FullStack2020/blob/Part6-exercise6.9-6.12-better_anecdotes/README-exercise6.9-6.12.jpg)
